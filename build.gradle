@@ -19,12 +19,12 @@ buildscript {
     repositories {
         jcenter()
         maven {
-            url 'http://repo.spring.io/plugins-release'
+            url 'https://repo.spring.io/plugins-release'
         }
     }
 
     dependencies {
-        classpath 'org.springframework.build.gradle:propdeps-plugin:0.0.7'
+        classpath 'io.spring.gradle:propdeps-plugin:0.0.10.RELEASE'
         classpath 'io.spring.gradle:dependency-management-plugin:1.0.9.RELEASE'
     }
 }
@@ -44,6 +44,7 @@ version '0.1.0-BUILD-SNAPSHOT'
 
 apply plugin: 'propdeps'
 apply plugin: 'propdeps-idea'
+apply plugin: "io.spring.dependency-management"
 
 sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
@@ -73,6 +74,10 @@ dependencies {
             [group: 'org.springframework.boot', name: 'spring-boot-starter-test'],
             [group: 'org.hsqldb', name: 'hsqldb', version: '2.5.0']
     )
+}
+
+jar {
+    from sourceSets.main.java
 }
 
 publishing {
@@ -122,7 +127,8 @@ rat {
             "**/build/**",
             "gradlew",
             "gradlew.bat",
-            "README.md"
+            "README.md",
+            ".project",
+            ".settings/**"
     ]
-    plainOutput = true
 }
